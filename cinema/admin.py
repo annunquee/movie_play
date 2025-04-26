@@ -1,6 +1,7 @@
-from django.contrib import admin
-from django.urls import path
+# cinema/admin.py
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-]
+from django.contrib import admin
+from .models import Movie, Seat  # (if you have these)
+
+admin.site.register(Movie)
+admin.site.register(Seat)
