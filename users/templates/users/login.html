@@ -1,13 +1,35 @@
-<!-- templates/login.html -->
-{% extends "base.html" %}
-
+{% extends "cinema/base.html" %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+
+.login-container {
+    background-color: white;
+    padding: 2.5rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h2 {
+margin-bottom: 1.5rem;
+color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+<div class="login-container">
+    <h2>Login to Homework Hub</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p>Are you a teacher? <a href="{% url 'register %}">Register here</a></p>
+
+
 {% endblock %}
