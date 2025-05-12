@@ -1,8 +1,9 @@
 {% extends "cinema/base.html" %}
-{% block title %}Login{% endblock %}
+{% load static %}
 
-{% block content %}
-
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
 .login-container {
     background-color: white;
     padding: 2.5rem 3rem;
@@ -14,22 +15,27 @@
 }
 
 .login-container h2 {
-margin-bottom: 1.5rem;
-color: #333;
+    margin-bottom: 1.5rem;
+    color: #333;
 }
 
 form {
     display: flex;
     flex-direction: column;
 }
+</style>
+{% endblock %}
+
+{% block content %}
 <div class="login-container">
     <h2>Login to Homework Hub</h2>
-    <form method="POST">
+    <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        <!-- Add your input fields here, e.g., username and password -->
         <button type="submit">Login</button>
     </form>
-    <p>Are you a teacher? <a href="{% url 'register %}">Register here</a></p>
+    
+    <p>Welcome to Movie Box. <a href="{% url 'register' %}">Register</a>
 
-
+</div>
 {% endblock %}
