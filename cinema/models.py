@@ -1,22 +1,27 @@
-# cinema/models.py
-
+# cinema/models.py 
 from django.db import models
-from users.models import User  # Your custom user model
+from users.models import User  # Custom user model
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    # You could also add poster = models.ImageField(upload_to="posters/", null=True, blank=True)
+    # poster = models.ImageField(upload_to="posters/", null=True, blank=True)
 
     def __str__(self):
         return self.title
 
+
 class Seat(models.Model):
-    seat_number = models.CharField(max_length=10)
+    row = models.CharField(max_length=5)  # e.g., A, B, C, D
+    seat_number = models.CharField(max_length=10)  # e.g., 1, 2, 3
     is_available = models.BooleanField(default=True)
 
+    class Meta:
+        unique_together = ('row', 'seat_number')  # Prevent duplicates
+
     def __str__(self):
-        return self.seat_number
+        return f"Row {self.row} Seat {self.seat_number}"
+
 
 class DailyMovie(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="daily_showings")
@@ -26,6 +31,7 @@ class DailyMovie(models.Model):
     def __str__(self):
         return f"{self.movie.title} at {self.show_time.strftime('%I:%M %p')}"
 
+
 class CinemaBooking(models.Model):
     movie_show = models.ForeignKey(DailyMovie, on_delete=models.CASCADE, related_name="bookings")
     seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
@@ -33,11 +39,13 @@ class CinemaBooking(models.Model):
     booked_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} booked {self.seat.seat_number} for {self.movie_show}"
+        return f"{self.user.username} booked {self.seat} for {self.movie_show}"
 
     def save(self, *args, **kwargs):
-        # When a booking is created, mark the seat as unavailable
+        # Only book if seat is available
         if self.seat.is_available:
             self.seat.is_available = False
             self.seat.save()
-        super().save(*args, **kwargs)
+            super().save(*args, **kwargs)
+        else:
+            raise ValueError(f"Seat {self.seat} is already booked.")
