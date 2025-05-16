@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cinema/', include('cinema.urls')),
     path('users/', include('users.urls')),
+    path('movies/', include('movies.urls')),  # <-- This line is missing in your setup
     path('', lambda request: redirect('cinema/', permanent=False)),  # optional: redirect home
 ]

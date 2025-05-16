@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'users',
 ]
 
+# Custom API keys and settings
+TMDB_API_KEY = 'your_api_key_here'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
