@@ -41,11 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'cinema',
+    'movies',
     'users',
 ]
-
-# Custom API keys and settings
-TMDB_API_KEY = 'your_api_key_here'
 
 
 MIDDLEWARE = [

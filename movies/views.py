@@ -1,10 +1,10 @@
 # movies/views.py
 from django.shortcuts import render
-from django.conf import settings
+from decouple import config
 from tmdbv3api import TMDb, Movie
 
 tmdb = TMDb()
-tmdb.api_key = settings.TMDB_API_KEY
+tmdb.api_key = config('TMDB_API_KEY')  # Directly from .env
 
 def movie_list(request):
     movie = Movie()

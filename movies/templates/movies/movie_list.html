@@ -1,11 +1,37 @@
-<!-- movies/templates/movies/movie_list.html -->
+<!-- templates/movies/movie_list.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Movie List</title>
+    <title>Popular Movies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .movie {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            float: left;
+            text-align: center;
+        }
+        .movie img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Movie List</h1>
+    <h1>Popular Movies</h1>
+    {% for movie in movies %}
+        <div class="movie">
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+            <h3>{{ movie.title }}</h3>
+            <p>{{ movie.overview|truncatewords:20 }}</p>
+        </div>
+    {% empty %}
+        <p>No movies found.</p>
+    {% endfor %}
 </body>
 </html>
-
